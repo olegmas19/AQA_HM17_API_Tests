@@ -1,6 +1,7 @@
 import requests
 import json
 from jsonschema import validate
+from data.resourse import DATA_DIR
 
 
 def test_get_list_user():
@@ -26,7 +27,7 @@ def test_get_single_user_checking_scheme_positive():
     assert body["data"]["email"] == "janet.weaver@reqres.in"
     assert body["data"]["first_name"] == "Janet"
     assert body["data"]["last_name"] == "Weaver"
-    with open("get_single_user.json") as file:
+    with open(DATA_DIR + "/get_single_user.json") as file:
         validate(body, schema=json.loads(file.read()))
 
 
@@ -75,7 +76,7 @@ def test_post_user_checking_scheme():
     body = response.json()
 
     assert response.status_code == 201
-    with open("post_users.json") as file:
+    with open(DATA_DIR + "/post_users.json") as file:
         validate(body, schema=json.loads(file.read()))
 
 
@@ -92,7 +93,7 @@ def test_put_update_user_checking_scheme():
     body = response.json()
 
     assert response.status_code == 200
-    with open("put_user.json") as file:
+    with open(DATA_DIR + "/put_user.json") as file:
         validate(body, schema=json.loads(file.read()))
 
 
@@ -140,7 +141,7 @@ def test_post_register_user_bad_request_checking_scheme():
 
     assert response.status_code == 400
     assert response.json()["error"] == "Missing password"
-    with open("post_register_bad_request.json") as file:
+    with open(DATA_DIR + "/post_register_bad_request.json") as file:
         validate(body, schema=json.loads(file.read()))
 
 
